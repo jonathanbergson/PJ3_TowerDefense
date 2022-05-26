@@ -1,19 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] public GameObject enemie;
-    [SerializeField] public Transform target;
+    public GameObject enemie;
+    public Transform target;
 
     [Header("Wave Settings")]
+    [SerializeField] private Text waveText;
     [SerializeField] private float countDownWaves;
-    [Range(10f, 1f)] [SerializeField] private float timeBetweenWaves = 5f;
+    [SerializeField] [Range(10f, 1f)] private float timeBetweenWaves = 5f;
 
     private int[] enemiesWaveRange = { 2, 4, 5, 8 };
 
     private void Start()
     {
-        countDownWaves = timeBetweenWaves;
+        countDownWaves = 2f;
     }
 
     void Update()
@@ -24,6 +26,11 @@ public class Spawner : MonoBehaviour
             countDownWaves = timeBetweenWaves;
         }
         countDownWaves -= Time.deltaTime;
+
+        if (waveText)
+        {
+            waveText.text = System.Math.Round(countDownWaves, 1).ToString() + "s";
+        }
     }
 
     private void SpwanEnemies()
