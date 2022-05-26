@@ -11240,6 +11240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base
       objectReference: {fileID: 0}
+    - target: {fileID: 6729923992171964843, guid: a12412f5ac0b1da4a9698f6e85a1e77f, type: 3}
+      propertyPath: range
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6934445239183593923, guid: a12412f5ac0b1da4a9698f6e85a1e77f, type: 3}
       propertyPath: m_Name
       value: Head
