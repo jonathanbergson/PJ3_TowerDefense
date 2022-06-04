@@ -8,6 +8,14 @@ public class Turret : MonoBehaviour
     [SerializeField] private string enemyTag = "inimigo";
     [SerializeField] private Transform engrenagem;
 
+    [Header("Ataque")]
+    [SerializeField] private float fireRate = 1f;
+    [SerializeField] private float fireCountdown = 0f;
+
+    [Header("Projetil")]
+    [SerializeField] private GameObject projetilPrefab;
+    [SerializeField] private Transform firePoint;
+
     private void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
@@ -48,6 +56,25 @@ public class Turret : MonoBehaviour
             Quaternion rotacaoNecessariaParaVirar = Quaternion.LookRotation(direcaoParaMirar);
             Vector3 rotacaoParaMirar = Quaternion.Lerp(engrenagem.rotation, rotacaoNecessariaParaVirar, Time.deltaTime * 4).eulerAngles;
             engrenagem.rotation = Quaternion.Euler(0f, rotacaoParaMirar.y, 0f);
+
+            if (fireCountdown <= 0f)
+            {
+                Atirar();
+                fireCountdown = 1f/fireRate;
+            }
+
+            fireCountdown -= Time.deltaTime;
+        }
+    }
+
+    private void Atirar()
+    {
+        GameObject projetilGObject = Instantiate(projetilPrefab, firePoint.position, firePoint.rotation);
+        Shoot projetil = projetilGObject.GetComponent<Shoot>();
+
+        if (projetil != null)
+        {
+            projetil.BuscarAlvo(target);
         }
     }
 
